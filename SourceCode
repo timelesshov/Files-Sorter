@@ -1,0 +1,29 @@
+import os
+import shutil
+
+def create_folder_if_not_exists(folder_path):
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+def sort_files(source_folder):
+    for root, dirs, files in os.walk(source_folder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            if os.path.isfile(file_path):
+                if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.gif'):
+                    create_folder_if_not_exists(os.path.join(source_folder, 'Images'))
+                    shutil.move(file_path, os.path.join(source_folder, 'Images', file))
+                elif file.endswith('.pdf'):
+                    create_folder_if_not_exists(os.path.join(source_folder, 'PDF'))
+                    shutil.move(file_path, os.path.join(source_folder, 'PDF', file))
+                elif file.endswith('.mp4') or file.endswith('.avi') or file.endswith('.mkv'):
+                    create_folder_if_not_exists(os.path.join(source_folder, 'Videos'))
+                    shutil.move(file_path, os.path.join(source_folder, 'Videos', file))
+                elif file.endswith('.doc') or file.endswith('.docx'):
+                    create_folder_if_not_exists(os.path.join(source_folder, 'MS Word'))
+                    shutil.move(file_path, os.path.join(source_folder, 'MS Word', file))
+
+if __name__ == "__main__":
+    source_folder = r'C:\Users\user\Documents\Python Tutorial\File Explorer Sorting'
+    sort_files(source_folder)
+    print("Files sorted successfully.")
